@@ -18,15 +18,20 @@ class AI:
         self.input_name = self.sess.get_inputs()[0].name
 
     def preprocess(self, img: np.ndarray) -> np.ndarray:
-        ##TODO: preprocess your input image, remember that img is in BGR channels order
-        raise NotImplementedError
-
-        return img
+        image = img_to_array(image).astype(np.uint8)
+        
+        image = cv2.resize(image, (image_size, image_size))
+        
+        img_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        img_clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8)).apply(img_gray)
+        img_blurred = cv2.GaussianBlur(img_clahe, (3, 3), 0)
+        
+        img_crop = img_blurred[image_size//2:image_size, 0:image_size]
+        img_crop = cv2.resize(img_crop, (image_size, image_size))
+        return img_crop.astype(np.uint8)
 
     def postprocess(self, detections: np.ndarray) -> np.ndarray:
         ##TODO: prepare your outputs
-        raise NotImplementedError
-
         return detections
 
     def predict(self, img: np.ndarray) -> np.ndarray:
