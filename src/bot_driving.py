@@ -18,7 +18,7 @@ class AI:
         self.input_name = self.sess.get_inputs()[0].name
 
     def preprocess(self, img: np.ndarray) -> np.ndarray:
-        image = img_to_array(image).astype(np.uint8)
+        image = img_to_array(img).astype(np.uint8)
         
         image = cv2.resize(image, (image_size, image_size))
         
