@@ -1,0 +1,6 @@
+opencv-python
+pandas
+pillow
+pyyaml
+tensorflow
+tf2onnx
