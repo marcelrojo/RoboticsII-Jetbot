@@ -41,6 +41,9 @@ def gstreamer_pipeline(
         "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
         "videoconvert ! "
         "video/x-raw, format=(string)BGR ! appsink"
+        "queue max-size-buffers=1 leaky=downstram !"
+        "appsink drop=1 max-buffers=1 sync=0" 
+        
         % (
             sensor_id,
             capture_width,
