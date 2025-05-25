@@ -1,5 +1,5 @@
 model:
-  path: '../models/models_onnx/model_opset11_yuv_1w_73.onnx'
+  path: '../models/models_onnx/model_opset11_yuv_0w_73.onnx'
 
 robot:
   max_speed: 0.22

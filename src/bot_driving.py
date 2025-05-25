@@ -25,15 +25,15 @@ class AI:
         
         img = cv2.resize(img, (img_size, img_size))
         
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        img_clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8)).apply(img)
+        img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(10, 10))
+        
+        y,u,v = cv2.split(img_yuv)
+        y_clahe = clahe.apply(y)
+        img_clahe = cv2.merge((y_clahe, u, v))
         img_blurred = cv2.GaussianBlur(img_clahe, (3, 3), 0)
-        
-        img_crop = img_blurred[img_size//2:img_size, 0:img_size]
-        img_crop = cv2.resize(img_crop, (img_size, img_size))
-        
-        img_normalized = img_crop.astype(np.float32) / 255.0
-        img_normalized = np.expand_dims(img_normalized, axis=-1)
+
+        img_normalized = img_blurred.astype(np.float32) / 255.0
 
         return np.array([img_normalized])
 
